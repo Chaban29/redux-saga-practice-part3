@@ -3,8 +3,7 @@ import { takeEvery } from 'redux-saga/effects';
 import { UsersActions } from '../types/users';
 
 export function* usersWorker() {
-  const data: Generator = yield getUsersFromServer();
-  yield console.log(data);
+  yield getUsersFromServer();
 }
 
 export function* usersWatcher() {

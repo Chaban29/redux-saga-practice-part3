@@ -1,4 +1,4 @@
-import { takeEvery, takeLatest, takeLeading, select } from 'redux-saga/effects';
+import { takeLatest, takeLeading, select } from 'redux-saga/effects';
 import { CounterActions } from '../types/counter';
 
 const delay = (ms: number) =>
