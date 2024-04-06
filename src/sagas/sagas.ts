@@ -1,14 +1,19 @@
-import { take } from 'redux-saga/effects';
+import { takeEvery, takeLatest, takeLeading, select } from 'redux-saga/effects';
 import { CounterActions } from '../types/counter';
 
-export function* watchClickSaga() {
-  yield take(CounterActions.INCREMENT);
-  yield console.log('request 1');
-  yield take(CounterActions.DECREMENT);
-  yield console.log('request 2');
+const delay = (ms: number) =>
+  new Promise<void>((res) => setTimeout(res, ms * 1000));
+
+export function* workerClickSaga() {
+  const count: Generator = yield select(({ counter }) => counter.count);
+  yield delay(2);
+  yield console.log(`request ${count}`);
 }
 
-export function* workerClickSaga() {}
+export function* watchClickSaga() {
+  yield takeLatest(CounterActions.INCREMENT, workerClickSaga);
+  yield takeLeading(CounterActions.INCREMENT, workerClickSaga);
+}
 
 export function* helloSaga() {
   yield watchClickSaga();
